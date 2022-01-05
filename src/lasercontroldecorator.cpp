@@ -97,15 +97,15 @@ void LaserControlDecorator::refreshControllerList(bool refreshing){
     // refreshing controller list
     if(refreshing){
         laserManager.dacAssigner.updateDacList();
-        bundle->clear();
+        ofxOscBundle bundle;
         for(const ofxLaser::DacData& dac : laserManager.dacAssigner.getDacList()) {
             ofxOscMessage(sendMsg);
             sendMsg.setAddress("/controller_list");
             cout<<dac.label<<endl;
             if(dac.available) sendMsg.addStringArg(dac.label);
-            bundle->addMessage(sendMsg);
+            bundle.addMessage(sendMsg);
         }
-        oscSender.sendBundle(*bundle);
+        oscSender.sendBundle(bundle);
         setOscRefreshingControllerList(false);
     }
 }

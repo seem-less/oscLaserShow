@@ -20,7 +20,6 @@ public:
 
     ofxOscSender oscSender;
     ofxOscReceiver oscReciever;
-    ofxOscBundle *bundle = new ofxOscBundle;
 
     int getOscPatternChoice() const;
     float getOscAnimationSpeed() const;
@@ -44,8 +43,6 @@ private:
     void recieveOscMaskHeight(ofxOscMessage* mes);
     void recieveOscMaskLevel(ofxOscMessage* mes);
     void recieveOscGlobalBrightness(ofxOscMessage* mes);
-
-    void controllerLabelChanged();
 
     int oscPatternChoice = 0;
     float oscAnimationSpeed = 1;

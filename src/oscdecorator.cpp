@@ -26,6 +26,7 @@ void OscDecorator::OscUpdate(){
         recieveOscMaskLevel(mes);
         recieveOscGlobalBrightness(mes);
 
+        delete mes;
     }
 }
 
@@ -50,7 +51,7 @@ void OscDecorator::recieveOscRefreshingControllerList(ofxOscMessage *mes){
 void OscDecorator::recieveOscSelectedControllerLabel(ofxOscMessage *mes){
     if(mes->getAddress() == "/selected_controller"){
         oscSelectedControllerLabel = mes->getArgAsString(0);
-        controllerLabelChanged();
+        ofNotifyEvent(notifyControllerLabelChange, *getOscSelectedControllerLabel(), this);
     }
 }
 
@@ -93,10 +94,6 @@ void OscDecorator::sendFloat(string address, float number){
     sendMsg.setAddress(address);
     sendMsg.addFloatArg(number);
     oscSender.sendMessage(sendMsg);
-}
-
-void OscDecorator::controllerLabelChanged(){
-    ofNotifyEvent(notifyControllerLabelChange, *getOscSelectedControllerLabel(), this);
 }
 
 float OscDecorator::getOscGlobalBrightness() const

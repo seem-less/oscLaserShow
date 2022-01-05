@@ -5,14 +5,14 @@
 #include "basepattern.h"
 
 BasePattern::BasePattern(){
-    this->patternList = getPatternList();
+    patternList = getPatternList();
 }
 
 BasePattern::~BasePattern(){
 
 }
 
-vector<string>* BasePattern::getPatternList(){
+vector<string> BasePattern::getPatternList(){
     string path = "./ilda/";
     ofDirectory dir(path);
     //only show ild files
@@ -21,15 +21,15 @@ vector<string>* BasePattern::getPatternList(){
     dir.listDir();
     dir.sort();
 
-    vector<string>* list = new vector<string>;
+    vector<string> list;
     //go through and print out all the paths
     for(int i = 0; i < dir.size(); i++){
-        list->push_back(dir.getPath(i));
+        list.push_back(dir.getPath(i));
     }
 
     return list;
 }
 
 void BasePattern::loadIlda(unsigned int index){
-    this->sequence.load(this->patternList->at(index));
+    this->sequence.load(patternList.at(index));
 }

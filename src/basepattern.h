@@ -11,11 +11,11 @@ class BasePattern
 public:
     BasePattern();
     ~BasePattern();
-    vector<string>* getPatternList();
+    vector<string> getPatternList();
     void loadIlda(unsigned int index);
 
     ofxIldaFile::Sequence sequence;
-    vector<string>* patternList;
+    vector<string> patternList;
 };
 
 #endif // BASEPATTERN_H

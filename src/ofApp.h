@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxLaserDacData.h"
-#include "lasercontroldecorator.h"
+#include "oscLaser.h"
 
 
 class ofApp : public ofBaseApp{
@@ -11,6 +11,7 @@ public:
     void setup();
     void update();
     void draw();
+    void showLaserEffect(int effectnum);
 
     void keyPressed(int key);
     void keyReleased(int key);
@@ -24,6 +25,6 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
-    LaserControlDecorator laser;
+    OscLaser laser;
 
 };

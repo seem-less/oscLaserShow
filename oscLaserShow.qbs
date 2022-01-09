@@ -12,13 +12,11 @@ Project{
         name: { return FileInfo.baseName(sourceDirectory) }
 
         files: [
-            "src/basepattern.cpp",
-            "src/basepattern.h",
-            "src/lasercontroldecorator.cpp",
-            "src/lasercontroldecorator.h",
             "src/main.cpp",
             "src/ofApp.cpp",
             "src/ofApp.h",
+            "src/oscLaser.cpp",
+            "src/oscLaser.h",
             "src/oscdecorator.cpp",
             "src/oscdecorator.h",
         ]
@@ -27,7 +25,7 @@ Project{
             'ofxOsc',
             'ofxLaser',
             'ofxSvg',
-            'ofxIldaFile'
+            'ofxNetwork'
         ]
 
         // additional flags for the project. the of module sets some

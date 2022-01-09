@@ -1,25 +1,25 @@
 #ifndef OSCDECORATOR_H
 #define OSCDECORATOR_H
 
-#include "basepattern.h"
+#include "ofMain.h"
 #include "ofxOsc.h"
-#define OSC_RECIEVE_PORT 9000
-#define OSC_SEND_PORT 9001
+#include "ofxNetwork.h"
 
-class OscDecorator : public BasePattern
+class OscDecorator
 {
 public:
     OscDecorator();
     ~OscDecorator();
     void OscUpdate();
 
+    ofxTCPServer TCP;
+    ofxOscSender oscSender;
+    ofxOscReceiver oscReciever;
+
     ofEvent<string> notifyControllerLabelChange;
 
     void sendBool(string address, bool boolStatus);
     void sendFloat(string address, float number);
-
-    ofxOscSender oscSender;
-    ofxOscReceiver oscReciever;
 
     int getOscPatternChoice() const;
     float getOscAnimationSpeed() const;
@@ -29,10 +29,11 @@ public:
     float getOscBottomMaskHeight() const;
     float getOscTopMaskHeight() const;
     float getOscMaskLevel() const;
+    float getOscGlobalBrightness() const;
 
     void setOscRefreshingControllerList(bool newOscRefreshingControllerList);
-
-    float getOscGlobalBrightness() const;
+    void setTcpPort(int newTcpPort);
+    int numberOfConnectedClients(ofxTCPServer& TCP);
 
 private:
     void recieveOscPatternChoice(ofxOscMessage* mes);
@@ -53,6 +54,7 @@ private:
     float oscTopMaskHeight = 0.5;
     float oscMaskLevel = 0.5;
     float oscGlobalBrightness = 0.3;
+    int tcpPort;
 };
 
 #endif // OSCDECORATOR_H

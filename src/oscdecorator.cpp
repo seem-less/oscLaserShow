@@ -2,10 +2,6 @@
 
 OscDecorator::OscDecorator()
 {
-    //Setup OSC
-    oscReciever.setup(OSC_RECIEVE_PORT);
-    oscReciever.start();
-    oscSender.setup("localhost" ,OSC_SEND_PORT);
 }
 
 OscDecorator::~OscDecorator(){
@@ -13,21 +9,45 @@ OscDecorator::~OscDecorator(){
 }
 
 void OscDecorator::OscUpdate(){
-    while(oscReciever.hasWaitingMessages()){
-        ofxOscMessage* mes = new ofxOscMessage;
-        oscReciever.getNextMessage(*mes);
 
-        recieveOscPatternChoice(mes);
-        recieveOscLaserOn(mes);
-        recieveOscRefreshingControllerList(mes);
-        recieveOscSelectedControllerLabel(mes);
-        recieveOscAnimationSpeed(mes);
-        recieveOscMaskHeight(mes);
-        recieveOscMaskLevel(mes);
-        recieveOscGlobalBrightness(mes);
-
-        delete mes;
+    // restart TCP server if it is down
+    if(!TCP.isConnected()){
+        static int time = ofGetElapsedTimeMillis();
+        if(ofGetElapsedTimeMillis()-time>7000){
+            TCP.close();
+            if(TCP.setup(tcpPort)) ofLog() << "Server successfully up and running on port: "<< tcpPort;
+            time = ofGetElapsedTimeMillis();
+        }
     }
+        while(oscReciever.hasWaitingMessages()){
+            ofxOscMessage* mes = new ofxOscMessage;
+            oscReciever.getNextMessage(*mes);
+
+            recieveOscPatternChoice(mes);
+            recieveOscLaserOn(mes);
+            recieveOscRefreshingControllerList(mes);
+            recieveOscSelectedControllerLabel(mes);
+            recieveOscAnimationSpeed(mes);
+            recieveOscMaskHeight(mes);
+            recieveOscMaskLevel(mes);
+            recieveOscGlobalBrightness(mes);
+            delete mes;
+    }
+}
+
+void OscDecorator::setTcpPort(int newTcpPort)
+{
+    tcpPort = newTcpPort;
+}
+
+int OscDecorator::numberOfConnectedClients(ofxTCPServer& TCP){
+    // check how many clients are currently connected
+    int currentlyConnectedClients = 0;
+    for(int i = 0; i < TCP.getLastID(); i++)
+    {
+        if( TCP.isClientConnected(i) ) currentlyConnectedClients++;
+    }
+    return currentlyConnectedClients;
 }
 
 void OscDecorator::recieveOscPatternChoice(ofxOscMessage *mes){

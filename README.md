@@ -1,6 +1,6 @@
 # oscLaserShow
 
-Control a laser via OSC using ofxOSC and ofxLaser openframeworks addons. Tested with a [Helios DAC](https://bitlasers.com/helios-laser-dac/) and a Laserworld CS-2000RGB FX. 
+Control a laser via OSC using ofxOSC and ofxLaser openframeworks addons. Tested with Openframeworks 0.11.2, a [Helios DAC](https://bitlasers.com/helios-laser-dac/) and a Laserworld CS-2000RGB FX.
 
 ![Open Stage Control Template](/doc/openStageControlScreen.png)
 
